@@ -11,6 +11,9 @@ exposeMongoLivedata = function(namespace) {
   exposePollingDriver(namespace, coll);
   exposeMultiplexer(namespace, coll);
   exposeSynchronousCursor(namespace, coll);
+  Meteor.defer(() => {
+    Promise.await(coll.rawCollection().drop());
+  });
 };
 
 function exposeSynchronousCursor(namespace, coll) {
